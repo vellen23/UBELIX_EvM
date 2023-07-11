@@ -1,0 +1,9 @@
+cached-property==1.5.2
+h5py==3.1.0
+numpy==1.19.5
+pandas==1.1.5
+python-dateutil==2.8.2
+pytz==2023.3
+scipy==1.5.4
+six==1.16.0
+sklearn==0.0.post5
