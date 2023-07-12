@@ -59,6 +59,7 @@ def stabNMF(M_input, num_it=100, k0=2, k1=10, init='nndsvda',it=2000):
     instability = np.zeros((k1 - k0 + 1,))
 
     for k_num, k in enumerate(range(k0, k1 + 1)):  # for each rank
+        print(str(k_num)+'/'+str(k1 - k0 + 1), end="\r")
         # for each rank value
         W_all = np.zeros((num_it, d, k))
         for n in range(num_it):
@@ -69,7 +70,7 @@ def stabNMF(M_input, num_it=100, k0=2, k1=10, init='nndsvda',it=2000):
             for j in range(i, num_it):
                 x = W_all[i]
                 y = W_all[j]
-                CORR = get_BF_corr(x, y)
+                CORR = get_W_corr(x, y)
                 simMat_ij = max_corr(CORR) if i != j else 0  # amariMaxError(CORR) if i == j else max_corr(CORR)
                 distMat_ij = amariMaxError(CORR)
                 stability[k_num] += simMat_ij / (num_it * (num_it - 1) / 2)
