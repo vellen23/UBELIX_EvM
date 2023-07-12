@@ -29,7 +29,7 @@ def main(inputfolder, stab_NMF, k0, k1):
             con_trial['LL_onset_norm'] = con_trial.groupby('Chan').apply(lambda x: x['LL_onset'] / x['LL_pre'].mean()).reset_index(0, drop=True)
             ## fill nan with mean of specifc Con_ID
             con_trial['LL_onset_norm'].fillna(con_trial.groupby('Con_ID')['LL_onset_norm'].transform('mean'), inplace=True)
-            con_trial_block  = con_trial.groupby(['Con_ID','Stim', 'Chan', 'Block'])['LL_onset_norm'].mean()
+            con_trial_block  = con_trial.groupby(['Con_ID','Stim', 'Chan', 'Block'])['LL_onset_norm'].mean().reset_index()
             df_pivot = con_trial_block.pivot(index='Con_ID', columns='Block', values='LL_onset_norm')
             # If there are still missing values after pivot, you might want to fill them with the global mean
             df_pivot.fillna(con_trial['LL_onset_norm'].mean(), inplace=True)
