@@ -13,7 +13,7 @@ def main(inputfolder, stab_NMF, k0, k1):
     # Create output folder
     output_folder = os.path.join(inputfolder, "NMF_output")
     os.makedirs(output_folder, exist_ok=True)
-
+    print(output_folder)
     # Iterate over .csv files in input folder
     for filename in os.listdir(inputfolder):
         if filename.endswith(".csv") and filename.startswith("EL"):
@@ -70,7 +70,7 @@ def main(inputfolder, stab_NMF, k0, k1):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process CSV files and apply NMF.')
-    parser.add_argument('inputfolder', type=str, help='Input folder path')
+    parser.add_argument('--inputfolder', type=str, help='Input folder path')
     parser.add_argument('--stab_NMF', type=int, default=0, help='Binary flag for stability NMF')
     parser.add_argument('--k0', type=int, default=2, help='Number of clusters for NMF')
     parser.add_argument('--k1', type=int, default=10, help='Number of clusters for NMF')
