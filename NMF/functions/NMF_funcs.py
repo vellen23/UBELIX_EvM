@@ -76,17 +76,3 @@ def stabNMF(M_input, num_it=100, k0=2, k1=10, init='nndsvda',it=2000):
                 instability[k_num] += distMat_ij / (num_it * (num_it - 1))
 
     return stability, instability
-
-
-# Initiation of input matrix V that should be clustered using NMF of a rank between k0 an d k1
-V = np.random.random(30,1000)
-k0 = 2
-k1 = 5
-# run stability NMF for different ranks
-_, instability = stabNMF(V, num_it=100, k0=k0, k1=k1, init='nndsvda',it=2000)
-# select rank with lowest instability value
-ranks = np.arange(k0, k1)
-rank_sel = ranks[np.argmin(instability)]
-
-# rerun NMF with chosen best rank
-W, H = get_nnmf(V, rank_sel, init='nndsvda',it=2000)
