@@ -42,7 +42,7 @@ def main(inputfolder, stab_NMF, k0, k1):
                 # run stability NMF for different ranks
                 _, instability = NMF_funcs.stabNMF(V, num_it=100, k0=k0, k1=k1, init='nndsvda',it=2000)
                 # select rank with lowest instability value
-                ranks = np.arange(k0, k1)
+                ranks = np.arange(k0, k1+1)
                 k = ranks[np.argmin(instability)]
 
                 # rerun NMF with chosen best rank
