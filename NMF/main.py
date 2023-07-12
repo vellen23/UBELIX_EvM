@@ -5,6 +5,7 @@ import h5py
 import numpy as np
 import sys
 from sklearn.decomposition import NMF
+from os import environ as cuda_environment
 sys.path.append('./functions/')
 import NMF_funcs
 
@@ -16,6 +17,7 @@ def main(inputfolder, stab_NMF, k0, k1):
     # Iterate over .csv files in input folder
     for filename in os.listdir(inputfolder):
         if filename.endswith(".csv") and filename.startswith("EL"):
+            print(filename)
             # Load data
             # Load data
             con_trial = pd.read_csv(os.path.join(inputfolder, filename))
