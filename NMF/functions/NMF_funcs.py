@@ -42,16 +42,19 @@ def max_corr(corr):
     """Get the mean of the absolute maximum correlation coefficient for each row."""
     return np.abs(corr).max(axis=0).mean()
 
+
 def amariMaxError(correlation):
     """
     Computes what Wu et al. (2016) described as a 'amari-type error'
     based on average distance between factorization solutions.
     """
-    maxCol = correlation.abs().max(axis=0)
+    maxCol = np.abs(correlation).max(axis=0)
     colTemp = (1 - maxCol).mean()
-    maxRow = correlation.abs().max(axis=1)
+    maxRow = np.abs(correlation).max(axis=1)
     rowTemp = (1 - maxRow).mean()
     return (rowTemp + colTemp) / 2
+
+
 
 def stabNMF(M_input, num_it=100, k0=2, k1=10, init='nndsvda',it=2000):
     d = M_input.shape[0]  # number of features
