@@ -68,33 +68,6 @@ def main(inputfolder, stab_NMF, k0, k1):
             con_trial['Cluster'] = con_trial['Con_ID'].map(cluster_dict)
             con_trial.to_csv(os.path.join(output_folder, filename.replace(".csv", "_cluster.csv")), header=True, index=False)
 
-            # ## get summary
-            # # Group by Cluster, Stim, Chan, d, DI, Dist, t_onset, and SleepState
-            # group_df = con_trial.groupby(['Cluster', 'Stim', 'Chan', 'd', 'DI', 'Dist', 't_onset', 'SleepState'])['LL_onset_norm']
-            #
-            # # Convert group_df back to a DataFrame for new columns addition
-            # group_df = group_df.mean().reset_index()
-            #
-            # # Get unique clusters
-            # clusters = con_trial['Cluster'].unique()
-            #
-            # # Iterate over clusters
-            # for cluster in clusters:
-            #     # Get unique Stim and Chan combinations for the current cluster
-            #     data_cluster = con_trial.loc[con_trial['Cluster'] == cluster]
-            #
-            #     # Compare distributions of LL_onset_norm between Wake and NREM
-            #     nrem = compare_distributions(data_cluster[data_cluster.SleepState == 'Wake']['LL_onset_norm'].values, data_cluster[data_cluster.SleepState == 'NREM']['LL_onset_norm'].values)
-            #     # Compare distributions of LL_onset_norm between Wake and REM
-            #     rem = compare_distributions(data_cluster[data_cluster.SleepState == 'Wake']['LL_onset_norm'].values, data_cluster[data_cluster.SleepState == 'REM']['LL_onset_norm'].values)
-            #
-            #     group_df.loc[group_df['Cluster'] == cluster, 'NREM_Effect'] = nrem
-            #     group_df.loc[group_df['Cluster'] == cluster, 'REM_Effect'] = rem
-            #
-            # group_df.to_csv(os.path.join(output_folder, 'summary_'+filename), header=True, index=False)
-            #
-            # print('---DONE -----')
-
 
     print('---DONE -----')
 
@@ -102,8 +75,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process CSV files and apply NMF.')
     parser.add_argument('--inputfolder', type=str, help='Input folder path')
     parser.add_argument('--stab_NMF', type=int, default=0, help='Binary flag for stability NMF')
-    parser.add_argument('--k0', type=int, default=2, help='Number of clusters for NMF')
-    parser.add_argument('--k1', type=int, default=10, help='Number of clusters for NMF')
+    parser.add_argument('--k0', type=int, default=2, help='Min Number of clusters for NMF')
+    parser.add_argument('--k1', type=int, default=10, help='Max Number of clusters for NMF')
     args = parser.parse_args()
 
     main(args.inputfolder, args.stab_NMF, args.k0, args.k1)
