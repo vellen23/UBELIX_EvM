@@ -4,7 +4,7 @@ from os import environ as cuda_environment
 import shutil
 
 sub_path = 'X:\\4 e-Lab\\'  # y:\\eLab
-shared_path = "T:\\EL_experiment\\Codes\\UBELIX_Data\\"
+shared_path = "C:\\Users\\i0328442\\Documents\\EVM\\EL_Experiment\\UBELIX_Cluster\\Data"
 patient_path = "X:\\4 e-Lab\\EvM\\Projects\\EL_experiment\\Analysis\\Patients\\"
 
 subjs = ["EL004", "EL005", "EL0010", "EL011", "EL012", "EL013", "EL014", "EL015", "EL016", "EL017", "EL019", "EL020",
