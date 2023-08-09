@@ -43,7 +43,7 @@ def read_h5(file):
 def process_file(inputfolder, output_folder, filename):
     print(f"Starting: {filename}")
     con_trial = pd.read_csv(os.path.join(inputfolder, filename))
-    clusters, W, H = BMf.run_NMF(con_trial, mode='stab', k0=5, k1=6)
+    clusters, W, H,con_trial = BMf.run_NMF(con_trial, mode='stab', k0=5, k1=6)
 
     output_filename = filename.replace(".csv", "_nmf.h5")
     with h5py.File(os.path.join(output_folder, output_filename), 'w') as hf:

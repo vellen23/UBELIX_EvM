@@ -4,7 +4,7 @@
     <list default="true" id="b15a29f0-c90f-42a2-9c30-43de8b8e2f22" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/functions/NMF_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/NMF_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NMF/helper/IO_hierNMF.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/helper/IO_hierNMF.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NMF/main_BM.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/main_BM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job_BM.sh" beforeDir="false" afterPath="$PROJECT_DIR$/job_BM.sh" afterDir="false" />
     </list>
@@ -99,7 +99,7 @@
       <workItem from="1691052223031" duration="8398000" />
       <workItem from="1691398733708" duration="32000" />
       <workItem from="1691410248513" duration="897000" />
-      <workItem from="1691505567905" duration="12653000" />
+      <workItem from="1691505567905" duration="14797000" />
     </task>
     <servers />
   </component>

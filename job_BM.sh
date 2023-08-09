@@ -12,9 +12,7 @@ module load Anaconda3
 source venv/bin/activate
 
 # go to Folder with python scripts
-pwd
 cd ./NMF/
-pwd
 
 # Run the Python script
 python3 main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/ --parallel=1

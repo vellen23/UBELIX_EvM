@@ -55,4 +55,4 @@ def run_NMF(con_trial, mode='stab', k0=3, k1=10):
     # con_trial['Cluster'] = con_trial['Con_ID'].map(cluster_dict)
     # # con_trial.to_csv(os.path.join(output_folder, filename.replace(".csv", "_cluster.csv")), header=True,
     # #                  index=False)
-    return clusters, W, H
+    return clusters, W, H, con_trial
