@@ -29,7 +29,7 @@ def run_NMF(con_trial, mode='stab', k0=3, k1=10):
     if mode == 'stab':
         print('running stability NMF')
         # run stability NMF for different ranks
-        _, instability = NMF_funcs.stabNMF(V, num_it=100, k0=k0, k1=k1, init='nndsvda', it=2000)
+        _, instability = NMF_funcs.stabNMF(V, num_it=20, k0=k0, k1=k1, init='nndsvda', it=2000)
         # select rank with lowest instability value
         ranks = np.arange(k0, k1 + 1)
         k = ranks[np.argmin(instability)]
@@ -45,13 +45,14 @@ def run_NMF(con_trial, mode='stab', k0=3, k1=10):
         print('running NMF with a rank of ' + str(k))
         W, H = NMF_funcs.get_nnmf(V, n_components=k)
 
-    # Assigning the clusters to each connection
-    clusters = np.argmax(W, axis=1)
-
-    # Create a dictionary with connection_id as keys and cluster as values
-    cluster_dict = {i: cluster for i, cluster in enumerate(clusters)}
-    # Add the 'Cluster' column to the DataFrame
-    con_trial['Cluster'] = con_trial['Con_ID'].map(cluster_dict)
-    # con_trial.to_csv(os.path.join(output_folder, filename.replace(".csv", "_cluster.csv")), header=True,
-    #                  index=False)
-    return con_trial
+    clusters = NMF_funcs.get_clusters(W)
+    # # Assigning the clusters to each connection
+    # clusters = np.argmax(W, axis=1)
+    #
+    # # Create a dictionary with connection_id as keys and cluster as values
+    # cluster_dict = {i: cluster for i, cluster in enumerate(clusters)}
+    # # Add the 'Cluster' column to the DataFrame
+    # con_trial['Cluster'] = con_trial['Con_ID'].map(cluster_dict)
+    # # con_trial.to_csv(os.path.join(output_folder, filename.replace(".csv", "_cluster.csv")), header=True,
+    # #                  index=False)
+    return clusters, W, H

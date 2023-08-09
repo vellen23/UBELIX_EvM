@@ -17,4 +17,4 @@ cd ./NMF/
 pwd
 
 # Run the Python script
-python3 main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/
+python3 main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/ --parallel=1

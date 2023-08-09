@@ -4,6 +4,7 @@ import sys
 from scipy import stats
 from sklearn.decomposition import NMF
 import pandas as pd
+from sklearn.cluster import KMeans
 import random
 # import staNMF as st
 # from staNMF.nmf_models import spams_nmf
@@ -11,14 +12,46 @@ from scipy.stats import entropy
 
 
 # This function will compute the entropy for each row of the input matrix
+def get_clusters(W):
+    # todo: find better way to assign clusters - for now k-means separation
+
+    # Initialize a dictionary to store the cluster assignments for each column of W
+    column_cluster_assignments = {}
+    num_cluster = W.shape[1]
+    for cluster_idx in range(num_cluster):
+        W_values = W[:, cluster_idx]
+        # Reshape the cluster values into a single column matrix for K-means
+        W_values = W_values.reshape(-1, 1)
+        # Perform K-means clustering on the cluster values
+        kmeans = KMeans(n_clusters=2)
+        cluster_assignments = kmeans.fit_predict(W_values)
+        # Determine which cluster assignment corresponds to higher values
+        higher_value_cluster = np.argmax(kmeans.cluster_centers_)
+        # Assign the channel to the higher value cluster if its assignment matches
+        for channel, assignment in enumerate(cluster_assignments):
+            if assignment == higher_value_cluster:
+                if cluster_idx not in column_cluster_assignments:
+                    column_cluster_assignments[cluster_idx] = []
+                column_cluster_assignments[cluster_idx].append(channel)
+
+    # Normalize the basis matrix columns to have unit L2 norm
+    # W_normalized = W / np.linalg.norm(W, axis=0)
+    # Print the channel assignments for each column of W
+    # for cluster_idx, channels in column_cluster_assignments.items():
+    #    print(f"Column {cluster_idx} (Cluster {cluster_idx}): Channels {channels}")
+
+    return column_cluster_assignments
+
+
 def get_entropy(L):
     E = np.array([entropy(row) for row in L])
     A = entropy(E)
     B = np.mean(E)
     return E, A, B
 
+
 def hier_staNMF(X, k_range, max_clusters, clusters=None, idx=None, parent_entropy=None, cluster_label='',
-                threshold=0.1, level=0, stab_it = 20):
+                threshold=0.1, level=0, stab_it=20):
     if idx is None:
         idx = np.arange(X.shape[0])
 
@@ -68,6 +101,7 @@ def hier_staNMF(X, k_range, max_clusters, clusters=None, idx=None, parent_entrop
                 clusters.append(new_cluster)
 
     return clusters
+
 
 def recursive_stanmf(X, k_range, max_clusters, clusters=None, idx=None, parent_entropy=None, cluster_label='',
                      threshold=0.1, level=0):
