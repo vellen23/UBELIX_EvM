@@ -6,7 +6,7 @@ import NMF_funcs
 
 
 def get_V(con_trial):
-    con_trial = con_trial[(con_trial.Sig > -1) & (con_trial.Artefact < 2)]
+    con_trial = con_trial[(con_trial.Sig > -1) & (con_trial.Artefact < 1)]
     con_trial = con_trial.reset_index(drop=True)
     ## 1. Add unique connection label for each StimxChan combination: Con_ID
     con_trial['Con_ID'] = con_trial.groupby(['Stim', 'Chan']).ngroup()

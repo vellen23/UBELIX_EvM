@@ -10,37 +10,85 @@ import random
 # from staNMF.nmf_models import spams_nmf
 from scipy.stats import entropy
 
+from sklearn.cluster import KMeans
+import numpy as np
 
-# This function will compute the entropy for each row of the input matrix
+
 def get_clusters(W):
-    # todo: find better way to assign clusters - for now k-means separation
+    """
+    Assign channels to clusters based on high W values.
 
-    # Initialize a dictionary to store the cluster assignments for each column of W
+    Parameters:
+    - W: Basis matrix from NMF decomposition
+
+    Returns:
+    - column_cluster_assignments: A dictionary mapping each cluster to its member channels
+    """
     column_cluster_assignments = {}
     num_cluster = W.shape[1]
-    for cluster_idx in range(num_cluster):
-        W_values = W[:, cluster_idx]
-        # Reshape the cluster values into a single column matrix for K-means
-        W_values = W_values.reshape(-1, 1)
-        # Perform K-means clustering on the cluster values
-        kmeans = KMeans(n_clusters=2)
-        cluster_assignments = kmeans.fit_predict(W_values)
-        # Determine which cluster assignment corresponds to higher values
-        higher_value_cluster = np.argmax(kmeans.cluster_centers_)
-        # Assign the channel to the higher value cluster if its assignment matches
-        for channel, assignment in enumerate(cluster_assignments):
-            if assignment == higher_value_cluster:
-                if cluster_idx not in column_cluster_assignments:
-                    column_cluster_assignments[cluster_idx] = []
-                column_cluster_assignments[cluster_idx].append(channel)
 
-    # Normalize the basis matrix columns to have unit L2 norm
-    # W_normalized = W / np.linalg.norm(W, axis=0)
-    # Print the channel assignments for each column of W
-    # for cluster_idx, channels in column_cluster_assignments.items():
-    #    print(f"Column {cluster_idx} (Cluster {cluster_idx}): Channels {channels}")
+    for cluster_idx in range(num_cluster):
+        W_values = W[:, cluster_idx].reshape(-1, 1)  # Reshape the values for clustering
+        kmeans = KMeans(n_clusters=2).fit(W_values)
+        higher_value_cluster = np.argmax(kmeans.cluster_centers_)
+
+        for channel, assignment in enumerate(kmeans.labels_):
+            if assignment == higher_value_cluster:
+                column_cluster_assignments.setdefault(cluster_idx, []).append(channel)
 
     return column_cluster_assignments
+
+
+def hier2_staNMF(X, k_range1, k_range, stab_it=20):
+    """
+    Run two-level stability NMF clustering on matrix X.
+
+    Parameters:
+    - X: Input matrix
+    - k_range: Range of ranks to check for stability NMF
+
+    Returns:
+    - cluster_structure: Structure storing channels for both clustering levels
+    """
+    cluster_structure = {}
+
+    # Level 1
+    _, instability = stabNMF(X, num_it=stab_it, k0=min(k_range1), k1=max(k_range1), init='nndsvda', it=2000)
+    best_k = k_range1[np.argmin(instability)]
+    W1, H1 = get_nnmf(X, best_k, init='nndsvda', it=2000)
+    clusters_level1 = get_clusters(W1)
+
+    # For each cluster in level 1, run the second level of NMF
+    for level1_cluster_idx, channels_in_cluster in clusters_level1.items():
+        X_cluster = X[channels_in_cluster]
+        cluster_key = 'C' + str(level1_cluster_idx + 1)
+
+        if len(channels_in_cluster) > max(k_range):
+
+            _, instability = stabNMF(X_cluster, num_it=stab_it, k0=min(k_range), k1=max(k_range), init='nndsvda',
+                                     it=2000)
+            best_k = k_range[np.argmin(instability)]
+            W2, H2 = get_nnmf(X_cluster, best_k, init='nndsvda', it=2000)
+            clusters_level2 = get_clusters(W2)
+
+            # Map local indices of clusters_level2 to original indices in X
+            mapped_clusters_level2 = {}
+            for lvl2_idx, local_indices in clusters_level2.items():
+                mapped_clusters_level2[cluster_key + '.'+str(lvl2_idx+1)] = [channels_in_cluster[idx] for idx in local_indices]
+
+            # Append clusters for both levels to the cluster_structure dictionary
+            if cluster_key not in cluster_structure:
+                cluster_structure[cluster_key] = {}
+            cluster_structure[cluster_key]['level1'] = channels_in_cluster
+            cluster_structure[cluster_key]['level2'] = mapped_clusters_level2
+        else:
+            # Append clusters for both levels to the cluster_structure dictionary
+            if cluster_key not in cluster_structure:
+                cluster_structure[cluster_key] = {}
+            cluster_structure[cluster_key]['level1'] = channels_in_cluster
+            cluster_structure[cluster_key]['level2'] = channels_in_cluster
+
+    return cluster_structure, W1, H1
 
 
 def get_entropy(L):
