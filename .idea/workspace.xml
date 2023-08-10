@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b15a29f0-c90f-42a2-9c30-43de8b8e2f22" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NMF/functions/IO_funcs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/functions/.ipynb_checkpoints/Untitled-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NMF/functions/.ipynb_checkpoints/Untitled-checkpoint.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/NMF/functions/NMF_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/NMF_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/functions/Untitled.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/Untitled.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/main_BM.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/main_BM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/main_IO.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/main_IO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NMF/functions/Untitled.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NMF/helper/IO_hierNMF.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/helper/IO_hierNMF.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +123,7 @@
       <workItem from="1691052223031" duration="8398000" />
       <workItem from="1691398733708" duration="32000" />
       <workItem from="1691410248513" duration="897000" />
-      <workItem from="1691505567905" duration="20301000" />
+      <workItem from="1691505567905" duration="21843000" />
     </task>
     <servers />
   </component>
@@ -138,7 +135,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NMF/functions/NMF_funcs.py</url>
-          <line>167</line>
+          <line>165</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -148,7 +145,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NMF/functions/NMF_funcs.py</url>
-          <line>90</line>
+          <line>88</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
@@ -156,7 +153,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/UBELIX_EvM$copy_files.coverage" NAME="copy_files Coverage Results" MODIFIED="1691076900588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NMF/helper" />
-    <SUITE FILE_PATH="coverage/UBELIX_EvM$main_IO.coverage" NAME="main_IO Coverage Results" MODIFIED="1691593793453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NMF" />
+    <SUITE FILE_PATH="coverage/UBELIX_EvM$main_IO.coverage" NAME="main_IO Coverage Results" MODIFIED="1691660940609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NMF" />
     <SUITE FILE_PATH="coverage/UBELIX_EvM$main_BM.coverage" NAME="main_BM Coverage Results" MODIFIED="1691580788634" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NMF" />
   </component>
 </project>

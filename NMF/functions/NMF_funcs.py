@@ -76,17 +76,15 @@ def hier2_staNMF(X, k_range1, k_range, stab_it=20):
             for lvl2_idx, local_indices in clusters_level2.items():
                 mapped_clusters_level2[cluster_key + '.'+str(lvl2_idx+1)] = [channels_in_cluster[idx] for idx in local_indices]
 
-            # Append clusters for both levels to the cluster_structure dictionary
-            if cluster_key not in cluster_structure:
-                cluster_structure[cluster_key] = {}
-            cluster_structure[cluster_key]['level1'] = channels_in_cluster
-            cluster_structure[cluster_key]['level2'] = mapped_clusters_level2
         else:
-            # Append clusters for both levels to the cluster_structure dictionary
-            if cluster_key not in cluster_structure:
-                cluster_structure[cluster_key] = {}
-            cluster_structure[cluster_key]['level1'] = channels_in_cluster
-            cluster_structure[cluster_key]['level2'] = channels_in_cluster
+            # Map local indices of clusters_level2 to original indices in X
+            mapped_clusters_level2 = {}
+            mapped_clusters_level2[cluster_key + '.1'] = channels_in_cluster
+        # Append clusters for both levels to the cluster_structure dictionary
+        if cluster_key not in cluster_structure:
+            cluster_structure[cluster_key] = {}
+        cluster_structure[cluster_key]['level1'] = channels_in_cluster
+        cluster_structure[cluster_key]['level2'] = mapped_clusters_level2
 
     return cluster_structure, W1, H1
 
