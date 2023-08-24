@@ -61,7 +61,6 @@ def process_file(inputfolder, output_folder, filename):
 
 
 def conNMF(inputfolder, output_folder, filename):
-    multiprocessing.freeze_support()
     print(f"Starting: {filename}")
     con_trial = pd.read_csv(os.path.join(inputfolder, filename))
 
@@ -104,7 +103,7 @@ def main(inputfolder, parallel=1):
 #
 #     parser.add_argument('--parallel', type=int, default=0, help='Parallel (0/1)')
 #     args = parser.parse_args()
-#
+#     multiprocessing.freeze_support()
 #     main(args.inputfolder, args.parallel)
 
 # if __name__ == "__main__":

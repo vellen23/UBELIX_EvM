@@ -55,7 +55,7 @@ def nmf_run(args):
     best_W = None
 
     for n in range(n_runs):
-        nmf = nimfa.Nmf(data_matrix, rank=rank, seed="random_vcol", max_iter=10)
+        nmf = nimfa.Nmf(data_matrix.T, rank=rank, seed="random_vcol", max_iter=10)
         fit = nmf()
         connectivity = fit.fit.connectivity()
         connectivity_matrices.append(connectivity)
