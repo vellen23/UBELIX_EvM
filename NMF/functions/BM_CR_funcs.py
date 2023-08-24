@@ -1,5 +1,6 @@
 import numpy as np
 import sys
+import sklearn
 
 sys.path.append('./functions/')
 import NMF_funcs
@@ -40,7 +41,7 @@ def run_NMF(con_trial, mode='stab', k0=3, k1=10):
     elif mode == 'hier_stab':
         k_range = np.arange(k0, k1 + 1)
         clusters = NMF_funcs.hier_staNMF(V, k_range, max_clusters=20)
-    else: # single
+    else:  # single
         k = k0
         print('running NMF with a rank of ' + str(k))
         W, H = NMF_funcs.get_nnmf(V, n_components=k)
@@ -56,3 +57,15 @@ def run_NMF(con_trial, mode='stab', k0=3, k1=10):
     # # con_trial.to_csv(os.path.join(output_folder, filename.replace(".csv", "_cluster.csv")), header=True,
     # #                  index=False)
     return clusters, W, H, con_trial
+
+
+def run_conNMF(con_trial, experiment_dir=None, k0=3, k1=10):
+
+    V, con_trial = get_V(con_trial)
+    labels = None
+    runs_per_rank = 100
+    if k1 > np.min(V.shape):
+        k1 = np.min(V.shape) - 1
+
+    V = sklearn.preprocessing.normalize(V)
+    NMF_funcs.parallel_nmf_consensus_clustering(V, (k0, k1), runs_per_rank, experiment_dir, target_clusters=labels)

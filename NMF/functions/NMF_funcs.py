@@ -1,17 +1,138 @@
 import os
-import numpy as np
 import sys
 from scipy import stats
 from sklearn.decomposition import NMF
-import pandas as pd
 from sklearn.cluster import KMeans
 import random
-# import staNMF as st
-# from staNMF.nmf_models import spams_nmf
 from scipy.stats import entropy
 
 from sklearn.cluster import KMeans
+import multiprocessing
+import os
+import datetime
 import numpy as np
+import pandas as pd
+import nimfa
+from sklearn.metrics import adjusted_rand_score
+from scipy.cluster.hierarchy import linkage, cophenet
+
+
+def calculate_cophenetic_corr(A):
+    """
+    Compute the cophenetic correlation coefficient for matrix A.
+
+    Parameters:
+    - A : numpy.ndarray
+        Input matrix.
+
+    Returns:
+    - float
+        Cophenetic correlation coefficient.
+    """
+    # Extract the values from the lower triangle of A
+    avec = np.array([A[i, j] for i in range(A.shape[0] - 1)
+                     for j in range(i + 1, A.shape[1])])
+
+    # Consensus entries are similarities, conversion to distances
+    Y = 1 - avec
+
+    # Hierarchical clustering
+    Z = linkage(Y, method='average')
+
+    # Cophenetic correlation coefficient of a hierarchical clustering
+    coph = cophenet(Z, Y)[0]
+
+    return coph
+
+
+def nmf_run(args):
+    data_matrix, rank, n_runs, target_clusters = args
+    consensus = np.zeros((data_matrix.shape[0], data_matrix.shape[0]))
+    obj = np.zeros(n_runs)
+    connectivity_matrices = []
+    lowest_obj = float('inf')
+    best_H = None
+    best_W = None
+
+    for n in range(n_runs):
+        nmf = nimfa.Nmf(data_matrix, rank=rank, seed="random_vcol", max_iter=10)
+        fit = nmf()
+        connectivity = fit.fit.connectivity()
+        connectivity_matrices.append(connectivity)
+        consensus += connectivity
+        obj[n] = fit.fit.final_obj
+        if obj[n] < lowest_obj:
+            lowest_obj = obj[n]
+            best_H = fit.coef()
+            best_W = fit.basis()
+
+    consensus /= n_runs
+    coph = calculate_cophenetic_corr(consensus)
+    instability = 1 - coph
+
+    # Computing ARI if target_clusters is provided
+    ari = None
+    if target_clusters is not None:
+        clusters = np.array([np.argmax(best_H[:, i]) for i in range(best_H.shape[1])])
+        ari = adjusted_rand_score(target_clusters, clusters)
+
+    # Storing metrics
+    metrics = {
+        "Rank": rank,
+        "Min Final Obj": lowest_obj,
+        "Adjusted Rand Index": ari,
+        "Cophenetic Correlation": coph,
+        "Instability index": instability
+    }
+
+    return metrics, consensus, connectivity_matrices, best_H, best_W
+
+
+def parallel_nmf_consensus_clustering(data_matrix, rank_range, n_runs, experiment_dir=None, target_clusters=None):
+    # Create a directory for the experiment
+    if experiment_dir is None:
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        experiment_dir = os.path.join("Experiment_" + timestamp)
+    os.makedirs(experiment_dir, exist_ok=True)
+
+    # Using all available cores
+    n_cores = multiprocessing.cpu_count()
+    with multiprocessing.Pool(processes=n_cores) as pool:
+        results = pool.map(nmf_run, [(data_matrix, rank, n_runs, target_clusters) for rank in
+                                     range(rank_range[0], rank_range[1] + 1)])
+
+    # Saving results
+    for (metrics, consensus, connectivity_matrices, best_H, best_W), rank in zip(results, range(rank_range[0],
+                                                                                                rank_range[1] + 1)):
+        # Creating directory structure for rank
+        rank_dir = os.path.join(experiment_dir, f"k={rank}")
+        os.makedirs(rank_dir, exist_ok=True)
+
+        connectivity_dir = os.path.join(rank_dir, "connectivity_matrices")
+        os.makedirs(connectivity_dir, exist_ok=True)
+
+        # Saving connectivity matrices
+        for idx, matrix in enumerate(connectivity_matrices):
+            connectivity_path = os.path.join(connectivity_dir, f"connectivity_{idx + 1}.csv")
+            np.savetxt(connectivity_path, matrix, delimiter=",")
+
+        # Saving consensus matrix
+        consensus_path = os.path.join(rank_dir, "consensus_matrix.csv")
+        np.savetxt(consensus_path, consensus, delimiter=",")
+
+        # Saving H_best and W_best matrices
+        h_best_path = os.path.join(rank_dir, "H_best.csv")
+        np.savetxt(h_best_path, best_H, delimiter=",")
+
+        w_best_path = os.path.join(rank_dir, "W_best.csv")
+        np.savetxt(w_best_path, best_W, delimiter=",")
+
+    # Saving metrics as CSV
+    metrics_df = pd.DataFrame([res[0] for res in results])
+    metrics_path = os.path.join(experiment_dir, "metrics.csv")
+    metrics_df.to_csv(metrics_path, index=False)
+
+    return experiment_dir  # return the directory where results are saved
 
 
 def get_clusters(W):
@@ -74,7 +195,8 @@ def hier2_staNMF(X, k_range1, k_range, stab_it=20):
             # Map local indices of clusters_level2 to original indices in X
             mapped_clusters_level2 = {}
             for lvl2_idx, local_indices in clusters_level2.items():
-                mapped_clusters_level2[cluster_key + '.'+str(lvl2_idx+1)] = [channels_in_cluster[idx] for idx in local_indices]
+                mapped_clusters_level2[cluster_key + '.' + str(lvl2_idx + 1)] = [channels_in_cluster[idx] for idx in
+                                                                                 local_indices]
 
         else:
             # Map local indices of clusters_level2 to original indices in X
