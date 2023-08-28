@@ -28,15 +28,23 @@ def calculate_cophenetic_corr(A):
     Returns:
     - float
         Cophenetic correlation coefficient.
+
+        The cophenetic correlation coefficient is measure which indicates the dispersion of the consensus matrix and is based on the average of connectivity matrices.
+        It measures the stability of the clusters obtained from NMF. It is computed as the Pearson correlation of two distance matrices:
+        the first is the distance between samples induced by the consensus matrix; the second is the distance between samples induced by the linkage used in the reordering of the consensus matrix [Brunet2004].
+
     """
+
     # Extract the values from the lower triangle of A
     avec = np.array([A[i, j] for i in range(A.shape[0] - 1)
                      for j in range(i + 1, A.shape[1])])
 
     # Consensus entries are similarities, conversion to distances
+    # 1. matrix: distance between samples indced by consensus matrix
     Y = 1 - avec
 
     # Hierarchical clustering
+    # 2. matrix: distance between samples induced by the linkage used in the reordering of the consensus matrix
     Z = linkage(Y, method='average')
 
     # Cophenetic correlation coefficient of a hierarchical clustering
@@ -57,17 +65,18 @@ def nmf_run(args):
     for n in range(n_runs):
         nmf = nimfa.Nmf(data_matrix.T, rank=rank, seed="random_vcol", max_iter=10)
         fit = nmf()
+        # Matrix of shared membership Cij=1 iff sample i & j are in same cluster (highest H coeff)
         connectivity = fit.fit.connectivity()
         connectivity_matrices.append(connectivity)
         consensus += connectivity
-        obj[n] = fit.fit.final_obj
+        obj[n] = fit.fit.final_obj  # Final value (of the last performed iteration) of the objective function
         if obj[n] < lowest_obj:
             lowest_obj = obj[n]
             best_H = fit.coef()
             best_W = fit.basis()
 
     consensus /= n_runs
-    coph = calculate_cophenetic_corr(consensus)
+    coph = calculate_cophenetic_corr(consensus) # perfect consensus matrix, coph = 1
     instability = 1 - coph
 
     # Computing ARI if target_clusters is provided

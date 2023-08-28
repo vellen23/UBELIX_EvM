@@ -69,3 +69,4 @@ def run_conNMF(con_trial, experiment_dir=None, k0=3, k1=10):
 
     V = sklearn.preprocessing.normalize(V).T
     NMF_funcs.parallel_nmf_consensus_clustering(V, (k0, k1), runs_per_rank, experiment_dir, target_clusters=labels)
+    return con_trial

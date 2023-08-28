@@ -66,7 +66,12 @@ def conNMF(inputfolder, output_folder, filename):
 
     experiment_dir = os.path.join(output_folder, filename[0:6] + 'conNMF')
 
-    BMf.run_conNMF(con_trial, experiment_dir=experiment_dir, k0=4, k1=15)
+    con_trial = BMf.run_conNMF(con_trial, experiment_dir=experiment_dir, k0=4, k1=15)
+
+    # update con trial
+    # con_trial.to_csv(os.path.join(output_folder, filename.replace(".csv", "_cluster.csv")), header=True,
+    #                  index=False)
+
     print(f"Processed: {filename}")
 
 
