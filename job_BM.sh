@@ -6,17 +6,18 @@
 
 # Load any necessary modules
 module load Anaconda3
-module list
+# module list
 # Activate virtual environment if needed
 # conda activate your_environment
-cd /storage/homefs/ev19z018/Code/
-source venv/bin/activate
-which python
-echo "Activated venv"
+# cd /storage/homefs/ev19z018/Code/
+# source venv/bin/activate
+# which python
+# echo "Activated venv"
 
 
 # go to Folder with python scripts
-cd ./UBELIX_EvM/NMF/
+# cd ./UBELIX_EvM/NMF/
+cd ./NMF/
 
 # Run the Python script
 python3 main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/ --parallel=1
