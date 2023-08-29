@@ -24,4 +24,4 @@ echo "Activated venv"
 cd ./NMF/
 echo "Change path"
 # Run the Python script
-python main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/ --parallel=0
+python main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/ --parallel=1
