@@ -4,8 +4,10 @@
 #SBATCH --cpus-per-task=2  # Adjust this based on your cluster's resources
 #SBATCH --mem=16GB  # Adjust this based on your cluster's resources
 
-# Load any necessary modules
 module load Anaconda3
+eval "$(conda shell.bash hook)"
+conda activate base
+# conda env create -f env_base.yml
 # module list
 # Activate virtual environment if needed
 # conda activate your_environment
@@ -20,4 +22,4 @@ module load Anaconda3
 cd ./NMF/
 
 # Run the Python script
-python3 main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/ --parallel=1
+python main_BM.py --inputfolder=/storage/homefs/ev19z018/Data/BM_CR/ --parallel=1

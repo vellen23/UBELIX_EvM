@@ -21,7 +21,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="Shell Script" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/NMF/functions" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv_ubelix" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -120,7 +120,8 @@
       <workItem from="1691505567905" duration="21843000" />
       <workItem from="1692254639473" duration="3320000" />
       <workItem from="1692264227403" duration="17749000" />
-      <workItem from="1693204766872" duration="3594000" />
+      <workItem from="1693204766872" duration="4810000" />
+      <workItem from="1693309758372" duration="891000" />
     </task>
     <servers />
   </component>
