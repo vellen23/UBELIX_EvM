@@ -2,7 +2,7 @@
 #SBATCH --job-name=parallel_nmf
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=2  # Adjust this based on your cluster's resources
-#SBATCH --mem=16GB  # Adjust this based on your cluster's resources
+#SBATCH --mem=32GB  # Adjust this based on your cluster's resources
 
 module load Anaconda3
 eval "$(conda shell.bash hook)"
