@@ -6,7 +6,8 @@
 
 module load Anaconda3
 eval "$(conda shell.bash hook)"
-conda activate base
+conda env create -f venv_nmf.yml
+conda activate venv_nmf
 # conda env create -f env_base.yml
 # module list
 # Activate virtual environment if needed
