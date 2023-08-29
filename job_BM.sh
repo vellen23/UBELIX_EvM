@@ -6,7 +6,7 @@
 
 module load Anaconda3
 eval "$(conda shell.bash hook)"
-conda env create -f venv_nmf.yml
+# conda env create -f venv_nmf.yml
 conda activate venv_nmf
 # conda env create -f env_base.yml
 # module list
@@ -16,7 +16,7 @@ conda activate venv_nmf
 # source venv/bin/activate
 # which pythony
 
-# echo "Activated venv"
+echo "Activated venv"
 
 
 # go to Folder with python scripts

@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b15a29f0-c90f-42a2-9c30-43de8b8e2f22" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/UBELIX_EvM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UBELIX_EvM.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/job_BM.sh" beforeDir="false" afterPath="$PROJECT_DIR$/job_BM.sh" afterDir="false" />
     </list>
@@ -9,6 +11,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -125,7 +134,7 @@
       <workItem from="1692264227403" duration="17749000" />
       <workItem from="1693204766872" duration="4810000" />
       <workItem from="1693309758372" duration="891000" />
-      <workItem from="1693313190929" duration="2048000" />
+      <workItem from="1693313190929" duration="5274000" />
     </task>
     <servers />
   </component>
