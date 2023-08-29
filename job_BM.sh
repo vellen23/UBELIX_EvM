@@ -13,7 +13,8 @@ conda activate base
 # conda activate your_environment
 # cd /storage/homefs/ev19z018/Code/
 # source venv/bin/activate
-# which python
+# which pythony
+
 # echo "Activated venv"
 
 
