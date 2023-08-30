@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=parallel_nmf
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --cpus-per-task=2  # Adjust this based on your cluster's resources
 #SBATCH --mem=32GB  # Adjust this based on your cluster's resources
 

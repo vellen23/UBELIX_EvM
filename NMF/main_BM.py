@@ -7,7 +7,7 @@ import sys
 import json
 from os import environ as cuda_environment
 import multiprocessing
-
+from datetime import datetime
 sys.path.append('./functions/')
 import NMF_funcs
 import BM_CR_funcs as BMf
@@ -61,7 +61,7 @@ def process_file(inputfolder, output_folder, filename):
 
 
 def conNMF(inputfolder, output_folder, filename):
-    print(f"Starting: {filename}")
+    print(f"{datetime.now()}: Starting - {filename[0:6]}")
     con_trial = pd.read_csv(os.path.join(inputfolder, filename))
 
     experiment_dir = os.path.join(output_folder, filename[0:6] + 'conNMF')
@@ -69,9 +69,9 @@ def conNMF(inputfolder, output_folder, filename):
     con_trial = BMf.run_conNMF(con_trial, experiment_dir=experiment_dir, k0=4, k1=10)
 
     # update con trial
-    con_trial.to_csv(os.path.join(output_folder, filename.replace(".csv", "_cluster.csv")), header=True, index=False)
+    con_trial.to_csv(os.path.join(experiment_dir, filename.replace(".csv", "_cluster.csv")), header=True, index=False)
 
-    print(f"Processed: {filename}")
+    print(f"{datetime.now()}: Done - {filename[0:6]}")
 
 
 def main(inputfolder, parallel=1):
