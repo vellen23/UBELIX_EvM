@@ -57,11 +57,11 @@ def T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path
             # shutil.copytree(current_path, path_pat)
             copy_tree(current_path, path_pat)
 
-subjs = ["EL013", "EL014", "EL015", "EL016", "EL017", "EL019", "EL020",
-         "EL021", "EL022", "EL025", "EL026"]
+subjs = ["EL011", "EL014", "EL015", "EL016", "EL017", "EL019", "EL020",
+         "EL021", "EL022", "EL027", "EL026"]
 protocols = ['BrainMapping']
 protocols_short = ['BM']
-T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path)
+#T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path)
 
 archie2T_contrial(subjs, protocols, protocols_short)
-T2archie_NMF(subjs, protocols, protocols_short, shared_path, patient_path)
+#T2archie_NMF(subjs, protocols, protocols_short, shared_path, patient_path)
