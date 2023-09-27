@@ -3,25 +3,37 @@ import sys
 import sklearn
 
 sys.path.append('./functions/')
-import NMF_funcs
+sys.path.append('./FW/')
+import ccnmf as NMF_funcs
 
 
-def get_V(con_trial):
-    con_trial = con_trial[(con_trial.Sig > -1) & (con_trial.Artefact < 1)]
-    con_trial = con_trial.reset_index(drop=True)
-    ## 1. Add unique connection label for each StimxChan combination: Con_ID
+def get_V(con_trial, m='LL_sig'):
+    con_trial = con_trial[(con_trial.Ictal==0)&(con_trial.LL<50)&(con_trial.P2P<6000)&(con_trial.Artefact<1)&(con_trial.Sig>-1)].reset_index(drop=True)
     con_trial['Con_ID'] = con_trial.groupby(['Stim', 'Chan']).ngroup()
-    con_trial.insert(5, 'LL_sig', con_trial.LL * con_trial.Sig)
-    ## normalize LL based on the mean of LL_pre per Chan
-    con_trial['LL_norm'] = con_trial.groupby('Chan').apply(
-        lambda x: x['LL_sig'] / x['LL_pre'].median()).reset_index(0, drop=True)
-    ## fill nan with mean of specifc Con_ID
-    con_trial['LL_norm'].fillna(con_trial.groupby('Con_ID')['LL_norm'].transform('mean'), inplace=True)
-    con_trial_block = con_trial.groupby(['Con_ID', 'Stim', 'Chan', 'Block'])['LL_norm'].mean().reset_index()
-    df_pivot = con_trial_block.pivot(index='Con_ID', columns='Block', values='LL_norm')
-    # If there are still missing values after pivot, you might want to fill them with the global mean
-    df_pivot.fillna(con_trial['LL_norm'].mean(), inplace=True)
+    con_trial['LL_sig'] = con_trial['LL']*con_trial['Sig']
+
+    m = 'LL_sig' #m+'_BL'
+    data_plot = con_trial.groupby(['Con_ID','Stim', 'Chan', 'Block'], as_index=False)[[m, 'Sig']].mean().reset_index(drop=True)
+
+    sig_con = data_plot.groupby(['Con_ID'], as_index=False)['Sig'].mean()
+    sig_con = sig_con.loc[(sig_con.Sig>0.1), 'Con_ID'].values
+    data_plot = data_plot[np.isin(data_plot.Con_ID, sig_con)].reset_index(drop=True)
+    con_IDs = np.unique(data_plot.Con_ID)
+
+    df_pivot = data_plot.pivot(index='Con_ID', columns='Block', values=m)
+    df_pivot = df_pivot.apply(lambda row: row.fillna(row.mean()), axis=1)
+    df_pivot = df_pivot.fillna(df_pivot.median(axis=0))
     V = df_pivot.values
+    ## normalize LL based on the mean of LL_pre per Chan
+    #con_trial['LL_norm'] = con_trial.groupby('Chan').apply(
+    #    lambda x: x['LL_sig'] / x['LL_pre'].median()).reset_index(0, drop=True)
+    ## fill nan with mean of specifc Con_ID
+    # con_trial['LL_norm'].fillna(con_trial.groupby('Con_ID')['LL_norm'].transform('mean'), inplace=True)
+    # con_trial_block = con_trial.groupby(['Con_ID', 'Stim', 'Chan', 'Block'])['LL_norm'].mean().reset_index()
+    # df_pivot = con_trial_block.pivot(index='Con_ID', columns='Block', values='LL_norm')
+    # # If there are still missing values after pivot, you might want to fill them with the global mean
+    # df_pivot.fillna(con_trial['LL_norm'].mean(), inplace=True)
+    # V = df_pivot.values
     return V, con_trial
 
 
@@ -67,6 +79,6 @@ def run_conNMF(con_trial, experiment_dir=None, k0=3, k1=10):
     if k1 > np.min(V.shape):
         k1 = np.min(V.shape) - 1
 
-    V = sklearn.preprocessing.normalize(V).T
+    V = sklearn.preprocessing.normalize(V).T # transpose?
     NMF_funcs.parallel_nmf_consensus_clustering(V, (k0, k1), runs_per_rank, experiment_dir, target_clusters=labels)
     return con_trial

@@ -9,7 +9,7 @@ from os import environ as cuda_environment
 import multiprocessing
 from datetime import datetime
 sys.path.append('./functions/')
-import NMF_funcs
+#import NMF_funcs
 import BM_CR_funcs as BMf
 
 
@@ -98,13 +98,13 @@ def main(inputfolder, parallel=1):
 #
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process CSV files and apply NMF.')
-    parser.add_argument('--inputfolder', type=str,
-                        default='C:\\Users\\i0328442\Documents\EVM\EL_Experiment\\UBELIX_Cluster\\Data\\BM',
-                        help='Input folder path')
-
     # parser.add_argument('--inputfolder', type=str,
-    #                     default='/Users/ellenvanmaren/Desktop/Insel/EL_experiment/Codes/Cluster_scripts/Data/BM_CR',
+    #                     default='C:\\Users\\i0328442\Documents\EVM\EL_Experiment\\UBELIX_Cluster\\Data\\BM',
     #                     help='Input folder path')
+
+    parser.add_argument('--inputfolder', type=str,
+                        default='/Users/ellenvanmaren/Desktop/Insel/PhD_Projects/EL_experiment/Codes/Cluster_scripts/Data/BM_CR',
+                        help='Input folder path')
 
     parser.add_argument('--subj_parallel', type=int, default=0, help='Parallel (0/1)')
     args = parser.parse_args()

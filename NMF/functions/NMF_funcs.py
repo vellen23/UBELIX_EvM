@@ -12,7 +12,7 @@ import os
 import datetime
 import numpy as np
 import pandas as pd
-import nimfa
+# import nimfa
 from sklearn.metrics import adjusted_rand_score
 from scipy.cluster.hierarchy import linkage, cophenet
 
