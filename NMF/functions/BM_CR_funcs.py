@@ -8,6 +8,8 @@ import ccnmf as NMF_funcs
 
 
 def get_V(con_trial, m='LL_sig'):
+    if not "Ictal" in con_trial:
+        con_trial['Ictal'] = 0
     con_trial = con_trial[(con_trial.Ictal==0)&(con_trial.LL<50)&(con_trial.P2P<6000)&(con_trial.Artefact<1)&(con_trial.Sig>-1)].reset_index(drop=True)
     con_trial['Con_ID'] = con_trial.groupby(['Stim', 'Chan']).ngroup()
     con_trial['LL_sig'] = con_trial['LL']*con_trial['Sig']

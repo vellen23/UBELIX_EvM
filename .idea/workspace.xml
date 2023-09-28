@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b15a29f0-c90f-42a2-9c30-43de8b8e2f22" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/UBELIX_EvM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UBELIX_EvM.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/functions/NMF_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/functions/NMF_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NMF/main_BM.py" beforeDir="false" afterPath="$PROJECT_DIR$/NMF/main_BM.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,12 +165,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py</url>
-          <line>10</line>
+          <line>12</line>
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NMF/functions/BM_CR_funcs.py</url>
-          <line>76</line>
+          <line>78</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
