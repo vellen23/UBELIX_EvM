@@ -184,7 +184,7 @@ def nmf_run(args):
     return metrics, consensus, connectivity_matrices, best_H, best_W
 
 
-def parallel_nmf_consensus_clustering(data_matrix, rank_range, n_runs, experiment_dir=None, target_clusters=None):
+def parallel_nmf_consensus_clustering(data_matrix, rank_range, n_runs, experiment_dir=None, target_clusters=None, save_connectivity = 1):
     """
     Parallel NMF consensus clustering.
     
@@ -229,14 +229,15 @@ def parallel_nmf_consensus_clustering(data_matrix, rank_range, n_runs, experimen
         rank = rank_range[0] + idx
         rank_dir = os.path.join(experiment_dir, f"k={rank}")
         os.makedirs(rank_dir, exist_ok=True)
-
-        connectivity_dir = os.path.join(rank_dir, "connectivity_matrices")
-        os.makedirs(connectivity_dir, exist_ok=True)
-
         # Saving connectivity matrices
-        for idx, matrix in enumerate(connectivity_matrices):
-            connectivity_path = os.path.join(connectivity_dir, f"connectivity_{idx+1}.csv")
-            np.savetxt(connectivity_path, matrix, delimiter=",")
+        if save_connectivity:
+            connectivity_dir = os.path.join(rank_dir, "connectivity_matrices")
+            os.makedirs(connectivity_dir, exist_ok=True)
+
+            # Saving connectivity matrices
+            for idx, matrix in enumerate(connectivity_matrices):
+                connectivity_path = os.path.join(connectivity_dir, f"connectivity_{idx+1}.csv")
+                np.savetxt(connectivity_path, matrix, delimiter=",")
 
         # Saving consensus matrix
         consensus_path = os.path.join(rank_dir, "consensus_matrix.csv")
