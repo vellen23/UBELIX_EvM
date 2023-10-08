@@ -61,7 +61,7 @@ def process_file(inputfolder, output_folder, filename):
 
 
 def conNMF(inputfolder, output_folder, filename):
-    print(f"{datetime.now()}: Starting - {filename[0:6]}")
+    print(f"{datetime.now()}: Starting - {filename[0:5]}")
     con_trial = pd.read_csv(os.path.join(inputfolder, filename))
 
     experiment_dir = os.path.join(output_folder, filename[0:6] + 'conNMF')
@@ -98,13 +98,13 @@ def main(inputfolder, parallel=1):
 #
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process CSV files and apply NMF.')
-    # parser.add_argument('--inputfolder', type=str,
-    #                     default='C:\\Users\\i0328442\Documents\EVM\EL_Experiment\\UBELIX_Cluster\\Data\\BM',
-    #                     help='Input folder path')
-
     parser.add_argument('--inputfolder', type=str,
-                        default='/Users/ellenvanmaren/Desktop/Insel/PhD_Projects/EL_experiment/Codes/Cluster_scripts/Data/BM_CR',
+                        default='C:\\Users\\i0328442\Documents\EVM\EL_Experiment\\UBELIX_Cluster\\Data\\BM',
                         help='Input folder path')
+
+    # parser.add_argument('--inputfolder', type=str,
+    #                     default='/Users/ellenvanmaren/Desktop/Insel/PhD_Projects/EL_experiment/Codes/Cluster_scripts/Data/BM_CR',
+    #                     help='Input folder path')
 
     parser.add_argument('--subj_parallel', type=int, default=0, help='Parallel (0/1)')
     args = parser.parse_args()

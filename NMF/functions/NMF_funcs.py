@@ -97,7 +97,7 @@ def nmf_run(args):
     return metrics, consensus, connectivity_matrices, best_H, best_W
 
 
-def parallel_nmf_consensus_clustering(data_matrix, rank_range, n_runs, experiment_dir=None, target_clusters=None):
+def parallel_nmf_consensus_clustering(data_matrix, rank_range, n_runs, experiment_dir=None, target_clusters=None, save_connectivity = 1):
     # Create a directory for the experiment
     if experiment_dir is None:
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -121,9 +121,10 @@ def parallel_nmf_consensus_clustering(data_matrix, rank_range, n_runs, experimen
         os.makedirs(connectivity_dir, exist_ok=True)
 
         # Saving connectivity matrices
-        for idx, matrix in enumerate(connectivity_matrices):
-            connectivity_path = os.path.join(connectivity_dir, f"connectivity_{idx + 1}.csv")
-            np.savetxt(connectivity_path, matrix, delimiter=",")
+        if save_connectivity:
+            for idx, matrix in enumerate(connectivity_matrices):
+                connectivity_path = os.path.join(connectivity_dir, f"connectivity_{idx + 1}.csv")
+                np.savetxt(connectivity_path, matrix, delimiter=",")
 
         # Saving consensus matrix
         consensus_path = os.path.join(rank_dir, "consensus_matrix.csv")

@@ -73,7 +73,7 @@ def run_NMF(con_trial, mode='stab', k0=3, k1=10):
     return clusters, W, H, con_trial
 
 
-def run_conNMF(con_trial, experiment_dir=None, k0=3, k1=10):
+def run_conNMF(con_trial, experiment_dir=None, k0=3, k1=6):
 
     V, con_trial = get_V(con_trial)
     labels = None
@@ -82,5 +82,5 @@ def run_conNMF(con_trial, experiment_dir=None, k0=3, k1=10):
         k1 = np.min(V.shape) - 1
 
     V = sklearn.preprocessing.normalize(V).T # transpose?
-    NMF_funcs.parallel_nmf_consensus_clustering(V, (k0, k1), runs_per_rank, experiment_dir, target_clusters=labels)
+    NMF_funcs.parallel_nmf_consensus_clustering(V, (k0, k1), runs_per_rank, experiment_dir, target_clusters=labels, save_connectivity = 0)
     return con_trial

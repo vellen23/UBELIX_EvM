@@ -12,7 +12,6 @@ patient_path = "X:\\4 e-Lab\\EvM\\Projects\\EL_experiment\\Analysis\\Patients\\"
 subjs = ["EL004", "EL005", "EL010", "EL011", "EL012", "EL013", "EL014", "EL015", "EL016", "EL017", "EL019", "EL020",
          "EL021", "EL022", "EL025", "EL026"]
 
-subjs = ["EL024"]
 protocols = ['InputOutput', 'BrainMapping']
 protocols_short = ['IO', 'BM']
 cond_folder = 'CR'
@@ -57,11 +56,13 @@ def T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path
             # shutil.copytree(current_path, path_pat)
             copy_tree(current_path, path_pat)
 
-subjs = ["EL011", "EL014", "EL015", "EL016", "EL017", "EL019", "EL020",
-         "EL021", "EL022", "EL027", "EL026"]
+subjs = ["EL010", "EL011", "EL014", "EL015", "EL016", "EL017", "EL019", "EL020",
+         "EL021", "EL022","EL025", "EL026", "EL027"]
+subjs = [ "EL026"]
 protocols = ['BrainMapping']
 protocols_short = ['BM']
-#T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path)
-
+# T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path)
 archie2T_contrial(subjs, protocols, protocols_short)
+print('?DONE')
+# archie2T_contrial(subjs, protocols, protocols_short)
 #T2archie_NMF(subjs, protocols, protocols_short, shared_path, patient_path)
