@@ -58,11 +58,11 @@ def T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path
 
 subjs = ["EL010", "EL011", "EL014", "EL015", "EL016", "EL017", "EL019", "EL020",
          "EL021", "EL022","EL025", "EL026", "EL027"]
-subjs = [ "EL026"]
+# subjs = [ "EL026"]
 protocols = ['BrainMapping']
 protocols_short = ['BM']
-# T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path)
-archie2T_contrial(subjs, protocols, protocols_short)
+T2archie_conNMF(subjs, protocols, protocols_short, shared_path, patient_path)
+# archie2T_contrial(subjs, protocols, protocols_short)
 print('?DONE')
 # archie2T_contrial(subjs, protocols, protocols_short)
 #T2archie_NMF(subjs, protocols, protocols_short, shared_path, patient_path)
